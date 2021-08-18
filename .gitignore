@@ -1,0 +1,10 @@
+### Git Ignore ###
+*.iml
+*.txt
+.project
+.settings
+.idea
+.DS_Store
+target/
+build/
+logs
