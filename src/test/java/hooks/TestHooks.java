@@ -18,13 +18,12 @@ public class TestHooks {
 
     private DriverFactory driverFactory;
     private WebDriver driver;
-    private ConfigReader configReader;
     Properties prop;
 
     @Before(order = 0)
     public void getProperty() {
-        configReader = new ConfigReader();
-        prop = configReader.initialize();
+        ConfigReader.initialize();
+        prop = ConfigReader.getConfigProperties();
     }
 
     @Before(order = 1)
@@ -37,7 +36,9 @@ public class TestHooks {
         driverFactory = new DriverFactory();
         driver = driverFactory.init_driver(browserName, isHeadless);
 
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        // assign Implicit timeout as
+        driver.manage().timeouts().implicitlyWait(Long.parseLong(prop.getProperty("timeout"))
+                , TimeUnit.SECONDS);
     }
 
     @After(order = 0)
@@ -48,7 +49,9 @@ public class TestHooks {
     @After(order = 1)
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
+
             Log.info(scenario.getName() + " failed");
+
             // take screenshot:
             String screenshotName = scenario.getName().replaceAll(" ", "_");
             byte[] sourcePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);

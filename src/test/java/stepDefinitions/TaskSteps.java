@@ -9,6 +9,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import utils.ConfigReader;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -21,7 +22,9 @@ public class TaskSteps {
 
     @Given("user is on Test page")
     public void userIsOnTestPage() {
-        driver.get("https://coinmarketcap.com/");
+        driver.get(ConfigReader
+                .getConfigProperties()
+                .getProperty("coinBaseurl"));
     }
 
     @When("user Shows {int} rows")
