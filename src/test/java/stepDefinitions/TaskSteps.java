@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import static configs.Constants.BASE_URL;
 import configs.NumberEnum;
 import pages.TestPage;
 import support.DriverFactory;
@@ -18,13 +19,13 @@ import java.util.Locale;
 public class TaskSteps {
 
     private final WebDriver driver = DriverFactory.getDriver();
-    TestPage testPage = new TestPage(driver);
+    TestPage testPage = new TestPage();
 
     @Given("user is on Test page")
     public void userIsOnTestPage() {
         driver.get(ConfigReader
                 .getConfigProperties()
-                .getProperty("coinBaseurl"));
+                .getProperty(BASE_URL));
     }
 
     @When("user Shows {int} rows")

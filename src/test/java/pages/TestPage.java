@@ -17,9 +17,9 @@ import java.util.Locale;
 public class TestPage extends PageActions{
     private final WebDriver driver;
 
-    public TestPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+    public TestPage() {
+        PageFactory.initElements(getDriver(), this);
+        this.driver = getDriver();
     }
 
     @FindBy(css = ".table-control-area > div:nth-of-type(1) > div")

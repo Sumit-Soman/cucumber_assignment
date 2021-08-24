@@ -13,7 +13,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class DriverFactory {
 
-	public static WebDriver driver;
 	public static JavascriptExecutor jsExec;
 
 	public static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
@@ -25,7 +24,7 @@ public class DriverFactory {
 	 * @param browser
 	 * @return this will return webdriver.
 	 */
-	public WebDriver init_driver(String browser, String isHeadless) {
+	public WebDriver init_driver(final String browser, final String isHeadless) {
 
 		Log.info("Browser type: " + browser);
 		Log.info("IsHeadless: " + isHeadless);
