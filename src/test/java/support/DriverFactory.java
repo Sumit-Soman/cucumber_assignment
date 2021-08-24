@@ -2,6 +2,7 @@ package support;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import logger.Log;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,11 +14,12 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class DriverFactory {
 
 	public static WebDriver driver;
+	public static JavascriptExecutor jsExec;
 
 	public static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
 
 	/**
-	 * This method is used to initialize the thradlocal driver on the basis of given
+	 * This method is used to initialize the threadlocal driver on the basis of given
 	 * browser
 	 *
 	 * @param browser
@@ -51,10 +53,12 @@ public class DriverFactory {
 				Log.logError("Please pass the correct browser value: " + browser);
 				break;
 		}
-		getDriver().manage().deleteAllCookies();
-		getDriver().manage().window().maximize();
-		getDriver().manage().timeouts().pageLoadTimeout(20, SECONDS);
+		threadDriver.get().manage().deleteAllCookies();
+		threadDriver.get().manage().window().maximize();
+		threadDriver.get().manage().timeouts().pageLoadTimeout(20, SECONDS);
+		jsExec = (JavascriptExecutor) threadDriver.get();
 		getWebDriverWait();
+
 		return getDriver();
 	}
 

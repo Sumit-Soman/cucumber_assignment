@@ -32,7 +32,6 @@ plugin: html,json report properties
 glue: where the hooks and step definition is defined
 
 
-
 #### Use the testng.xml file to run the test cases
 
 ### Project Execution
@@ -41,10 +40,9 @@ glue: where the hooks and step definition is defined
 
 `mvn clean install -DskipTests`
 
+#### To run the project use this command(default chrome in head mode)
 
-#### To run the project use this command( default chrome in head mode:
-
-`mvn clean generate-sources test`
+`mvn clean test`
 
 #### Cucumber Report
 

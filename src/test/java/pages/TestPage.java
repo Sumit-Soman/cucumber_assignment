@@ -1,5 +1,6 @@
 package pages;
 
+import logger.Log;
 import support.PageActions;
 import support.PageWaits;
 import org.openqa.selenium.By;
@@ -13,7 +14,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
 
-public class TestPage {
+public class TestPage extends PageActions{
     private final WebDriver driver;
 
     public TestPage(WebDriver driver) {
@@ -67,9 +68,9 @@ public class TestPage {
     }
 
     public void selectOptionFromShowMoreDrop(int value) {
-        showRowsDropDwn.click();
-        driver.findElement(By.xpath(showRowsDrpDwnList.replace("$VALUE",
-                String.valueOf(value)))).click();
+        click(showRowsDropDwn);
+        click(driver.findElement(By.xpath(showRowsDrpDwnList.replace("$VALUE",
+                String.valueOf(value)))));
     }
 
     public long getDisplayedRows() {
@@ -79,37 +80,38 @@ public class TestPage {
     public void openFilterOptions() {
         // check if filter panel is not visible to open filter panel
         if (!PageActions.isDisplayed(filterPanel)) {
-            filterBtn.click();
+            click(filterBtn);
         }
     }
 
     public void clickAddFilter() {
-        addFilterBtn.click();
+        click(addFilterBtn);
     }
 
     public void filterByMarketCap(String range) {
         openFilterOptions();
         clickAddFilter();
-        marketCapFilter.click();
+        click(marketCapFilter);
         searchRange(range);
         applyFilterAndShowResults();
     }
 
     public void filterByPrice(String range) {
-        openFilterOptions();
+//        openFilterOptions();
         clickAddFilter();
-        priceFilter.click();
+        click(priceFilter);
         searchRange(range);
         applyFilterAndShowResults();
     }
 
     private void applyFilterAndShowResults() {
-        applyFilterBtn.click();
-        showResultsBtn.click();
+        click(applyFilterBtn);
+        click(showResultsBtn);
+        waitUntilJSReady();
     }
 
     private void searchRange(String range) {
-        driver.findElement(By.xpath(searchRange.replace("$RANGE", range))).click();
+        click(driver.findElement(By.xpath(searchRange.replace("$RANGE", range))));
     }
 
     public boolean verifyRecordWithinMarketCap(float minMarket, float maxMarket) {
@@ -128,7 +130,7 @@ public class TestPage {
                 float value = number.parse(webElement.getText()).floatValue();
                 return value >= minPrice && value <= maxPrice;
             } catch (ParseException e) {
-                e.printStackTrace();
+                Log.logError("Error received : "+ e.getMessage());
                 return false;
             }
         });
